@@ -20,7 +20,7 @@ $result = mysqli_query($conn, $sql);
 <body>
     <div class="table-container">
         <h1>📋 All Students (<?php echo mysqli_num_rows($result); ?>)</h1>
-        <a href="index.html" class="view-link">➕ New Registration</a>
+        <a href="form.php" class="view-link">➕ New Registration</a>
         <table>
             <tr><th>College ID</th><th>Name</th><th>Email</th><th>DOB</th><th>Department</th><th>Phone</th><th>Registered</th></tr>
             <?php while($row = mysqli_fetch_assoc($result)): ?>

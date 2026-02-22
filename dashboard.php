@@ -1,22 +1,18 @@
 <?php
-// FIXED Connection + All Queries
 $conn = new mysqli("localhost", "root", "", "veltech_db");
 if ($conn->connect_error) {
     die("❌ Database connection failed: " . $conn->connect_error);
 }
 
-// Sorting & filtering
 $sort = $_GET['sort'] ?? 'name';
 $filter = $_GET['dept'] ?? '';
 $order = $_GET['order'] ?? 'ASC';
 
-// Stats queries (moved to top)
 $total_result = $conn->query("SELECT COUNT(*) as c FROM students");
 $total = $total_result->fetch_assoc()['c'];
 
 $depts_result = $conn->query("SELECT department, COUNT(*) as c FROM students GROUP BY department");
 
-// Main query
 $sql = "SELECT * FROM students WHERE 1=1";
 if ($filter) $sql .= " AND department='$filter'";
 $sql .= " ORDER BY $sort $order";
@@ -45,7 +41,7 @@ $result = $conn->query($sql);
         }
         
         .stat-box {
-            background: rgba(255,255,255,0.1);
+            background: rgba(240, 4, 4, 0.1);
             backdrop-filter: blur(10px);
             padding: 1rem 1.5rem;
             border-radius: 15px;
@@ -64,18 +60,18 @@ $result = $conn->query($sql);
         }
         
         .control-select {
-            padding: 0.6rem 0.8rem;  /* ✅ BIGGER */
-            background: rgba(255,255,255,0.2);
+            padding: 0.6rem 0.8rem;  
+            background: rgba(223, 15, 15, 0.2);
             border: none;
             border-radius: 10px;
             color: white;
-            font-size: 1.1rem;    /* ✅ BIGGER */
+            font-size: 1.1rem;    
             cursor: pointer;
-            min-width: 160px;     /* ✅ BIGGER */
+            min-width: 160px;     
         }
         
         .table-container {
-            background: rgba(255,255,255,0.1);
+            background: rgba(5, 242, 80, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             overflow: hidden;
@@ -88,7 +84,7 @@ $result = $conn->query($sql);
         }
         
         .students-table th {
-            background: rgba(255,255,255,0.2);
+            background: rgba(160, 33, 33, 0.2);
             padding: 1rem;
             color: white;
             text-align: left;
@@ -108,7 +104,6 @@ $result = $conn->query($sql);
 <body>
     <div class="dashboard-main">
         
-        <!-- ✅ FIXED Stats -->
         <div class="stats-row">
             <div class="stat-box">Total: <?php echo $total; ?></div>
             <?php while($d = $depts_result->fetch_assoc()): ?>
@@ -116,7 +111,6 @@ $result = $conn->query($sql);
             <?php endwhile; ?>
         </div>
 
-        <!-- ✅ FIXED Controls -->
         <div class="controls-row">
             <select class="control-select" onchange="location='?sort=name&order=ASC'">
                 <option <?php echo ($sort=='name'&&$order=='ASC')?'selected':'';?>>Name A-Z</option>
@@ -133,7 +127,6 @@ $result = $conn->query($sql);
             </select>
         </div>
 
-        <!-- ✅ FIXED Table -->
         <div class="table-container">
             <table class="students-table">
                 <tr>
